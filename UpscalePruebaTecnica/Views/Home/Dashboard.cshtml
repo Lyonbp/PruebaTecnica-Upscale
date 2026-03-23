@@ -1,0 +1,506 @@
+﻿@model UpscalePruebaTecnica.Models.Usuario
+@{
+    Layout = null;
+    string nombreCompleto = $"{Model.PrimerApellido} {Model.SegundoApellido}, {Model.Nombres}";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil de Usuario - CEPLAN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 56px;
+            background-color: #ffffff;
+            border-right: 1px solid #eaeaea;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 12px;
+            z-index: 10;
+            flex: 0 0 56px;
+        }
+
+        .sidebar-icon {
+            font-size: 1.15rem;
+            color: #4a5568;
+            margin: 8px 0;
+            cursor: pointer;
+            text-align: center;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+        }
+
+        .icon-bars {
+            color: #0056b3;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+
+        .icon-active {
+            background-color: #ffeaea;
+            color: #dc3545;
+        }
+
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .header-rojo {
+            background-color: #B31919;
+            height: 60px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 30px;
+            color: white;
+            flex: 0 0 60px;
+        }
+
+        .header-user-info {
+            text-align: right;
+            line-height: 1.2;
+            margin-left: 15px;
+        }
+
+        .header-user-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .header-user-role {
+            font-size: 0.75rem;
+            color: #f0f0f0;
+        }
+
+        .content {
+            padding: 22px 32px;
+            flex: 1 1 auto;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        .breadcrumb-custom {
+            font-size: 0.78rem;
+            color: #6c757d;
+            margin-bottom: 4px;
+        }
+
+        .page-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 20px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            padding: 28px;
+            margin-bottom: 16px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            background-color: #a3c2f0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem;
+            color: #4a7fdc;
+            margin-right: 16px;
+        }
+
+        .badge-activo {
+            background-color: #e6f4ea;
+            color: #198754;
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-size: 0.72rem;
+            margin-left: 10px;
+        }
+
+        .profile-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0;
+            color: #212529;
+        }
+
+        .profile-role {
+            font-size: 0.9rem;
+            color: #495057;
+            margin: 4px 0;
+        }
+
+        .profile-entity {
+            font-size: 0.82rem;
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .nav-tabs {
+            border-bottom: 2px solid #eaeaea;
+            margin-bottom: 18px;
+        }
+
+        .nav-link {
+            color: #888;
+            font-weight: 500;
+            border: none !important;
+            padding: 8px 16px;
+            font-size: 0.92rem;
+        }
+
+            .nav-link.active {
+                color: #0056b3;
+                border-bottom: 3px solid #0056b3 !important;
+                background: transparent;
+                font-weight: 600;
+            }
+
+        .form-label {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #212529;
+            margin-bottom: 4px;
+        }
+
+        .form-control-static {
+            background-color: #f9f9f9;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 12px;
+            font-size: 0.88rem;
+            color: #495057;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 38px;
+        }
+
+        .edit-icon {
+            color: #0056b3;
+            cursor: pointer;
+        }
+
+        .dashboard-footer {
+            flex: 0 0 72px;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+        }
+
+            .dashboard-footer img {
+                height: 42px;
+            }
+
+        /* ----- ESTILOS DEL MODAL ----- */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .expiration-modal-content {
+            background-color: #CFCFCF;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .btn-warning-custom {
+            background-color: #C08A12;
+            border-color: #C08A12;
+            color: #1A1A1A;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn-warning-custom:hover {
+            background-color: #A3730D;
+            border-color: #A3730D;
+            color: #1A1A1A;
+        }
+
+        .warning-icon-img {
+            filter: saturate(0.85) brightness(0.95) contrast(0.95) opacity(0.95);
+        }
+
+        .warning-icon-fa {
+            font-size: 42px;         
+            line-height: 42px;
+            color: #B08900;           
+            opacity: 0.9;             
+            filter: saturate(0.85);  
+        }
+
+        :root{
+            --warning-muted: #B8860B;    
+            --warning-muted-bg: #B8860B;  
+        }
+
+        .warning-icon-badge{
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            background: var(--warning-muted-bg);
+        }
+
+        .warning-icon-fa{
+            font-size: 20px;     
+            line-height: 1;
+            color: #ffffff;      
+            opacity: 0.95;       
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <aside class="sidebar">
+            <i class="fa-solid fa-bars sidebar-icon icon-bars"></i>
+            <i class="fa-solid fa-house sidebar-icon"></i>
+            <i class="fa-regular fa-building sidebar-icon"></i>
+            <i class="fa-solid fa-file-circle-plus sidebar-icon icon-active"></i>
+            <i class="fa-solid fa-magnifying-glass sidebar-icon"></i>
+        </aside>
+
+        <div class="main-container">
+
+            <header class="header-rojo">
+                <i class="fa-solid fa-question fs-5 me-4"></i>
+                <div class="position-relative me-4">
+                    <i class="fa-solid fa-bell fs-5"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style="font-size: 0.6rem;">9+</span>
+                </div>
+                <i class="fa-solid fa-user fs-4"></i>
+                <div class="header-user-info">
+                    <div class="header-user-name">@nombreCompleto</div>
+                    <div class="header-user-role">Operador</div>
+                </div>
+            </header>
+
+            <main class="content">
+                <div class="breadcrumb-custom">Perfil de usuario</div>
+                <h1 class="page-title">Perfil de usuario</h1>
+
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                        <div>
+                            <div class="d-flex align-items-center">
+                                <h2 class="profile-name">@Model.PrimerApellido @Model.SegundoApellido, @Model.Nombres</h2>
+                                <span class="badge-activo">Activo</span>
+                            </div>
+                            <p class="profile-role">@Model.Cargo</p>
+                            <p class="profile-entity">@Model.Institucion</p>
+                        </div>
+                    </div>
+
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item"><a class="nav-link active" href="#">Información básica</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Responsabilidades</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Historial de responsabilidades</a></li>
+                    </ul>
+
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <label class="form-label">Nombres</label>
+                            <div class="form-control-static">@Model.Nombres</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Primer Apellido</label>
+                            <div class="form-control-static">@Model.PrimerApellido</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Segundo Apellido</label>
+                            <div class="form-control-static">@Model.SegundoApellido</div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Tipo de Documento de Identidad</label>
+                            <div class="form-control-static">@(Model.TipoDocumento?.Abreviatura ?? "DNI")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">N° de Documento de Identidad</label>
+                            <div class="form-control-static">@Model.NumeroDocumento</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Fecha de nacimiento</label>
+                            <div class="form-control-static">15 / 04 / 1944</div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Nacionalidad</label>
+                            <div class="form-control-static">@Model.Nacionalidad</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Sexo</label>
+                            <div class="form-control-static">@Model.Sexo</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Correo electrónico principal</label>
+                            <div class="form-control-static">
+                                @Model.CorreoPrincipal <i class="fa-solid fa-pen edit-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Correo electrónico secundario <span class="text-muted fw-normal">(Opcional)</span></label>
+                            <div class="form-control-static" style="height: 40px;">@Model.CorreoSecundario</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Teléfono Móvil</label>
+                            <div class="form-control-static">
+                                @Model.TelefonoMovil <i class="fa-solid fa-pen edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Teléfono secundario <span class="text-muted fw-normal">(Opcional)</span></label>
+                            <div class="d-flex gap-2">
+                                <select class="form-select" style="width: 100px; background-color: #f9f9f9; border:none;"><option>Tipo</option></select>
+                                <div class="form-control-static flex-grow-1" style="height: 40px;">@Model.TelefonoSecundario</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Tipo de Contratación</label>
+                            <div class="form-control-static">@(Model.TipoContratacion?.Abreviatura ?? "CAS")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Fecha de contratación</label>
+                            <div class="form-control-static">09 / 03 / 2015</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="dashboard-footer">
+                <img src="~/img/footer.svg" alt="Logos Institucionales">
+            </footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const inactivityMinutes = 0.05;
+        const countdownSeconds = 60;
+
+        let inactivityLimit = inactivityMinutes * 60 * 1000;
+        let inactivityTimeout;
+        let countdownInterval;
+        let currentCountdown;
+
+        let expirationModal;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            expirationModal = new bootstrap.Modal(document.getElementById('expirationModal'), {
+                backdrop: 'static',
+                keyboard: false
+            });
+            resetInactivityTimer();
+        });
+
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimeout);
+            clearInterval(countdownInterval);
+            inactivityTimeout = setTimeout(showExpirationModal, inactivityLimit);
+        }
+
+        function showExpirationModal() {
+            currentCountdown = countdownSeconds;
+            document.getElementById('countdownText').innerText = currentCountdown;
+            expirationModal.show();
+
+            countdownInterval = setInterval(() => {
+                currentCountdown--;
+                document.getElementById('countdownText').innerText = currentCountdown;
+
+                if (currentCountdown <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = '/Login?expired=true';
+                }
+            }, 1000);
+        }
+
+        function extendSession() {
+            expirationModal.hide();
+            resetInactivityTimer();
+        }
+
+        ['mousemove', 'keydown', 'mousedown', 'touchstart', 'scroll'].forEach(evt =>
+            document.addEventListener(evt, () => {
+                if (!document.getElementById('expirationModal').classList.contains('show')) {
+                    resetInactivityTimer();
+                }
+            }, true)
+        );
+    </script>
+
+    <div class="modal fade" id="expirationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 580px;">
+            <div class="modal-content expiration-modal-content">
+                <div class="modal-body d-flex gap-3 p-4">
+
+                    <div class="warning-icon mt-1">
+                        <img src="~/img/alerta.svg" alt="Icono de alerta" class="warning-icon-img" style="width: 42px; height: 42px;" />
+                    </div>
+
+                    <div class="flex-grow-1 ms-1">
+                        <h5 class="fw-bold mb-3" style="font-size: 1.15rem; color: #1a1a1a;">Su sesión esta a punto de expirar</h5>
+
+                        <p class="mb-4" style="font-size: 0.95rem; color: #4a4a4a; line-height: 1.5;">
+                            Por seguridad, su sesión expirará en <span id="countdownText" class="text-dark">60</span> segundos. Para continuar, seleccione "Extender sesión"
+                        </p>
+
+                        <div class="text-end mt-4">
+                            <button type="button" class="btn btn-warning-custom shadow-sm" onclick="extendSession()">Extender sesión</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
