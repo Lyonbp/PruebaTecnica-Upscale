@@ -27,6 +27,4 @@ Para recrear el entorno de datos:
    * **Contraseña:** `123456`
 
 ## 🎥 Video de Demostración
-En el siguiente video explico el enfoque técnico, la estructura del proyecto y realizo una demostración funcional de los puntos solicitados:
-
 👉 **[Ver Video en YouTube](https://youtu.be/qE3oYjmdX0M)**
